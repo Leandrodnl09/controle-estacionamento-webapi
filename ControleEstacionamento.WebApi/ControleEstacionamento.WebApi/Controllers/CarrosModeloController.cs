@@ -15,7 +15,7 @@ namespace ControleEstacionamento.WebApi.Controllers
                 Ano = 2022,
                 Marca = "Fiat",
                 Modelo = "Uno"
-            }
+            },
 
             new CarrosModeloModel()
             {
@@ -23,7 +23,7 @@ namespace ControleEstacionamento.WebApi.Controllers
                 Ano = 2021,
                 Marca = "Volkswagem",
                 Modelo = "Gol"
-            }
+            },
 
             new CarrosModeloModel()
             {
@@ -31,7 +31,7 @@ namespace ControleEstacionamento.WebApi.Controllers
                 Ano = 2020,
                 Marca = "Chevrolet",
                 Modelo = "Monza"
-            }
+            },
 
             new CarrosModeloModel()
             {
@@ -39,7 +39,7 @@ namespace ControleEstacionamento.WebApi.Controllers
                 Ano = 2019,
                 Marca = "Ford",
                 Modelo = "Fiesta"
-            }
+            },
         };
     }
 }
