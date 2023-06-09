@@ -81,5 +81,22 @@ namespace ControleEstacionamento.WebApi.Controllers
                 return NotFound("Não foi possivel remover a permanência do veículo!");
             }
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update([FromRoute] int id, [FromBody] ControlePermanenciaCarrosModel model)
+        {
+            var modelo = controlePermanenciaCarros.Where(c =>c.Id == id).FirstOrDefault();
+
+            if (modelo != null)
+            {
+                var indexOf = controlePermanenciaCarros.IndexOf(modelo);
+                controlePermanenciaCarros[indexOf] = model;
+                return Ok("O controle de permanência foi atualizado com sucesso!");
+            }
+            else
+            {
+                return NotFound("Não foi possivel encontrar o controle de permanência!");
+            }
+        }
     }
 }
