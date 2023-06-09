@@ -88,5 +88,22 @@ namespace ControleEstacionamento.WebApi.Controllers
                 return NotFound("Não foi possivel encontrar o modelo!");
             }
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update([FromRoute] int id, [FromBody] CarrosModeloModel model)
+        {
+            var modelo = _carrosModeloModels.Where(c =>c.Id == id).FirstOrDefault();
+
+            if (modelo != null)
+            {
+                var indexOf = _carrosModeloModels.IndexOf(modelo);
+                _carrosModeloModels[indexOf] = model;
+                return Ok("O modelo foi atualizado com sucesso!");
+            }
+            else
+            {
+                return NotFound("Não foi possivel encontar o modelo!");
+            }
+        }
     }
 }
