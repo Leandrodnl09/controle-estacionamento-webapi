@@ -47,5 +47,12 @@ namespace ControleEstacionamento.WebApi.Controllers
         {
             return Ok(_carrosModeloModels);
         }
+
+        [HttpGet("ano/{ano}")]
+        public async Task<ActionResult> GetByYear([FromRoute] int ano)
+        {
+            var modelos = _carrosModeloModels.Where(c => c.Ano == ano).ToList();
+            return Ok(modelos); 
+        }
     }
 }
