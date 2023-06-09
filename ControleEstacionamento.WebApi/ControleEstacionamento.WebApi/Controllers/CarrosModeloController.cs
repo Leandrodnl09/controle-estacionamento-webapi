@@ -58,7 +58,7 @@ namespace ControleEstacionamento.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById([FromRoute] int id)
         {
-            var modelo = _carrosModeloModels.Where(c =>c.Id == id).FirstOrDefault();
+            var modelo = _carrosModeloModels.Where(c => c.Id == id).FirstOrDefault();
 
             if (modelo == null)
                 return NotFound();
@@ -71,6 +71,22 @@ namespace ControleEstacionamento.WebApi.Controllers
         {
             _carrosModeloModels.Add(model);
             return Ok(model);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete([FromRoute] int id)
+        {
+            var modelo = _carrosModeloModels.Where(c => c.Id == id).FirstOrDefault();
+            
+            if(modelo != null)
+            {
+                _carrosModeloModels.Remove(modelo);
+                return Ok("O modelo foi deletado com sucesso!");
+            }
+            else
+            {
+                return NotFound("Não foi possivel encontrar o modelo!");
+            }
         }
     }
 }
