@@ -58,5 +58,12 @@ namespace ControleEstacionamento.WebApi.Controllers
 
             return Ok(modelo);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> Post([FromBody] ControlePermanenciaCarrosModel model)
+        {
+            controlePermanenciaCarros.Add(model);
+            return Ok(model);
+        }
     }
 }
