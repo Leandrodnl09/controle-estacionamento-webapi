@@ -47,5 +47,16 @@ namespace ControleEstacionamento.WebApi.Controllers
         {
             return Ok(controlePermanenciaCarros);
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetById([FromRoute] int id)
+        {
+            var modelo = controlePermanenciaCarros.Where(c => c.Id == id).FirstOrDefault();
+
+            if (modelo == null)
+                return NotFound();
+
+            return Ok(modelo);
+        }
     }
 }
