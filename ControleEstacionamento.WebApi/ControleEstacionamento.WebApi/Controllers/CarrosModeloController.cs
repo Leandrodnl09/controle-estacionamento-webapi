@@ -41,5 +41,11 @@ namespace ControleEstacionamento.WebApi.Controllers
                 Modelo = "Fiesta"
             },
         };
+
+        [HttpGet]
+        public async Task<ActionResult> Get()
+        {
+            return Ok(_carrosModeloModels);
+        }
     }
 }
