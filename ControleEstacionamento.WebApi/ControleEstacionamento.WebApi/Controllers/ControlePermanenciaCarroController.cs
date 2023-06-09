@@ -65,5 +65,21 @@ namespace ControleEstacionamento.WebApi.Controllers
             controlePermanenciaCarros.Add(model);
             return Ok(model);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete([FromRoute] int id)
+        {
+            var modelo = controlePermanenciaCarros.Where(c => c.Id == id).FirstOrDefault();
+
+            if(modelo != null)
+            {
+                controlePermanenciaCarros.Remove(modelo);
+                return Ok("Permanência do veículo removido com sucesso!");
+            }
+            else
+            {
+                return NotFound("Não foi possivel remover a permanência do veículo!");
+            }
+        }
     }
 }
