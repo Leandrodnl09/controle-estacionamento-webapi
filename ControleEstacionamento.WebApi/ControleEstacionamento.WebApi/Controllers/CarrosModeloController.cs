@@ -1,7 +1,7 @@
 ﻿using ControleEstacionamento.WebApi.Database;
 using ControleEstacionamento.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace ControleEstacionamento.WebApi.Controllers
 {
