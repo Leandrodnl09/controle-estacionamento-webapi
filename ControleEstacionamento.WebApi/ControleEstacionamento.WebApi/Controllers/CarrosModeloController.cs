@@ -1,5 +1,7 @@
-﻿using ControleEstacionamento.WebApi.Models;
+﻿using ControleEstacionamento.WebApi.Database;
+using ControleEstacionamento.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Data.Entity;
 
 namespace ControleEstacionamento.WebApi.Controllers
 {
@@ -7,81 +9,56 @@ namespace ControleEstacionamento.WebApi.Controllers
     [Route("api/modelos")]
     public class CarrosModeloController : Controller
     {
-        private static List<CarrosModeloModel> _carrosModeloModels = new List<CarrosModeloModel>()
+        private readonly DataContext _dataContext;
+
+        public CarrosModeloController(DataContext dataContext)
         {
-            new CarrosModeloModel()
-            {
-                Id = 1,
-                Ano = 2022,
-                Marca = "Fiat",
-                Modelo = "Uno"
-            },
-
-            new CarrosModeloModel()
-            {
-                Id = 2,
-                Ano = 2021,
-                Marca = "Volkswagem",
-                Modelo = "Gol"
-            },
-
-            new CarrosModeloModel()
-            {
-                Id = 3,
-                Ano = 2020,
-                Marca = "Chevrolet",
-                Modelo = "Monza"
-            },
-
-            new CarrosModeloModel()
-            {
-                Id = 4,
-                Ano = 2019,
-                Marca = "Ford",
-                Modelo = "Fiesta"
-            },
-        };
+            _dataContext = dataContext;
+        }
 
         [HttpGet]
         public async Task<ActionResult> Get()
         {
-            return Ok(_carrosModeloModels);
+            var carrosModelo = _dataContext.CarrosModelo.ToList();
+            return Ok(carrosModelo);
         }
 
         [HttpGet("ano/{ano}")]
         public async Task<ActionResult> GetByYear([FromRoute] int ano)
         {
-            var modelos = _carrosModeloModels.Where(c => c.Ano == ano).ToList();
-            return Ok(modelos); 
+            var modelos = _dataContext.CarrosModelo.Where(c => c.Ano == ano).ToList();
+            return Ok(modelos);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById([FromRoute] int id)
         {
-            var modelo = _carrosModeloModels.Where(c => c.Id == id).FirstOrDefault();
+            var carro = await _dataContext.CarrosModelo.Where(c => c.Id == id).FirstOrDefaultAsync();
 
-            if (modelo == null)
+            if (carro == null)
                 return NotFound();
 
-            return Ok(modelo);
+            return Ok(carro);
         }
 
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] CarrosModeloModel model)
         {
-            _carrosModeloModels.Add(model);
+            _dataContext.CarrosModelo.Add(model);
+            await _dataContext.SaveChangesAsync();
             return Ok(model);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete([FromRoute] int id)
         {
-            var modelo = _carrosModeloModels.Where(c => c.Id == id).FirstOrDefault();
-            
-            if(modelo != null)
+            var modelo = await _dataContext.CarrosModelo.Where(c => c.Id == id).FirstOrDefaultAsync();
+
+            if (modelo != null)
             {
-                _carrosModeloModels.Remove(modelo);
-                return Ok("O modelo foi deletado com sucesso!");
+                _dataContext.CarrosModelo.Remove(modelo);
+                await _dataContext.SaveChangesAsync();
+                return Ok("O modelo foi deletado!");
             }
             else
             {
@@ -92,17 +69,20 @@ namespace ControleEstacionamento.WebApi.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Update([FromRoute] int id, [FromBody] CarrosModeloModel model)
         {
-            var modelo = _carrosModeloModels.Where(c =>c.Id == id).FirstOrDefault();
+            var modelo = await _dataContext.CarrosModelo.Where(c => c.Id == id).FirstOrDefaultAsync();
+
 
             if (modelo != null)
             {
-                var indexOf = _carrosModeloModels.IndexOf(modelo);
-                _carrosModeloModels[indexOf] = model;
-                return Ok("O modelo foi atualizado com sucesso!");
+                modelo.Ano = model.Ano;
+                modelo.Modelo = model.Modelo;
+                modelo.Marca = model.Marca;
+                await _dataContext.SaveChangesAsync();
+                return Ok("O modelo foi atualizado!");
             }
             else
             {
-                return NotFound("Não foi possivel encontar o modelo!");
+                return NotFound("Não foi possivel encontrar o modelo!");
             }
         }
     }

@@ -1,3 +1,6 @@
+using ControleEstacionamento.WebApi.Database;
+using Microsoft.EntityFrameworkCore;
+
 namespace ControleEstacionamento.WebApi
 {
     public class Program
