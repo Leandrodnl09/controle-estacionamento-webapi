@@ -59,21 +59,23 @@ namespace ControleEstacionamento.WebApi.Controllers
             }
         }
 
-        //[HttpPut("{id}")]
-        //public async Task<ActionResult> Update([FromRoute] int id, [FromBody] ControlePermanenciaCarrosModel model)
-        //{
-        //    var modelo = controlePermanenciaCarros.Where(c =>c.Id == id).FirstOrDefault();
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update([FromRoute] int id, [FromBody] ControlePermanenciaCarrosModel model)
+        {
+            var modelo = await _dataContext.ControlePermanenciaCarros.Where(c => c.Id == id).FirstOrDefaultAsync();
 
-        //    if (modelo != null)
-        //    {
-        //        var indexOf = controlePermanenciaCarros.IndexOf(modelo);
-        //        controlePermanenciaCarros[indexOf] = model;
-        //        return Ok("O controle de permanência foi atualizado com sucesso!");
-        //    }
-        //    else
-        //    {
-        //        return NotFound("Não foi possivel encontrar o controle de permanência!");
-        //    }
-        //}
+            if (modelo != null)
+            {
+                modelo.Placa = model.Placa;
+                modelo.IdModelo = model.IdModelo;
+                modelo.DataHoraEntrada = model.DataHoraEntrada;
+                await _dataContext.SaveChangesAsync();
+                return Ok("O controle de permanência foi atualizado com sucesso!");
+            }
+            else
+            {
+                return NotFound("Não foi possivel encontrar o controle de permanência!");
+            }
+        }
     }
 }

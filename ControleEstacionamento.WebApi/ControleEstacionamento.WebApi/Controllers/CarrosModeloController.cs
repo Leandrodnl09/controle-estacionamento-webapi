@@ -71,7 +71,6 @@ namespace ControleEstacionamento.WebApi.Controllers
         {
             var modelo = await _dataContext.CarrosModelo.Where(c => c.Id == id).FirstOrDefaultAsync();
 
-
             if (modelo != null)
             {
                 modelo.Ano = model.Ano;
