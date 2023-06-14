@@ -18,20 +18,20 @@ namespace ControleEstacionamento.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult> Get()
         {
-            var controlePermanencia = _dataContext.ControlePermanenciaCarros.ToList();
-            return Ok(controlePermanencia);
+            var modelo = _dataContext.ControlePermanenciaCarros.ToList();
+            return Ok(modelo);
         }
 
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult> GetById([FromRoute] int id)
-        //{
-        //    var modelo = controlePermanenciaCarros.Where(c => c.Id == id).FirstOrDefault();
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetById([FromRoute] int id)
+        {
+            var modelo = _dataContext.ControlePermanenciaCarros.Where(c => c.Id == id).ToList();
 
-        //    if (modelo == null)
-        //        return NotFound();
+            if (modelo == null)
+                return NotFound();
 
-        //    return Ok(modelo);
-        //}
+            return Ok(modelo);
+        }
 
         //[HttpPost]
         //public async Task<ActionResult> Post([FromBody] ControlePermanenciaCarrosModel model)
