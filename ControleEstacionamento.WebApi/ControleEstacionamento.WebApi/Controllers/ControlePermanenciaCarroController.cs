@@ -17,16 +17,16 @@ namespace ControleEstacionamento.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Get()
+        public async Task<ActionResult> GetAllAsync()
         {
-            var modelo = _dataContext.ControlePermanenciaCarros.ToListAsync();
+            var modelo = await _dataContext.ControlePermanenciaCarros.ToListAsync();
             return Ok(modelo);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById([FromRoute] int id)
         {
-            var modelo = _dataContext.ControlePermanenciaCarros.Where(c => c.Id == id).FirstOrDefaultAsync();
+            var modelo = await _dataContext.ControlePermanenciaCarros.Where(c => c.Id == id).FirstOrDefaultAsync();
 
             if (modelo == null)
                 return NotFound();
@@ -42,21 +42,22 @@ namespace ControleEstacionamento.WebApi.Controllers
             return Ok(model);
         }
 
-        //[HttpDelete("{id}")]
-        //public async Task<ActionResult> Delete([FromRoute] int id)
-        //{
-        //    var modelo = controlePermanenciaCarros.Where(c => c.Id == id).FirstOrDefault();
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete([FromRoute] int id)
+        {
+            var modelo = await _dataContext.ControlePermanenciaCarros.Where(c => c.Id == id).FirstOrDefaultAsync();
 
-        //    if(modelo != null)
-        //    {
-        //        controlePermanenciaCarros.Remove(modelo);
-        //        return Ok("Permanência do veículo removido com sucesso!");
-        //    }
-        //    else
-        //    {
-        //        return NotFound("Não foi possivel remover a permanência do veículo!");
-        //    }
-        //}
+            if (modelo != null)
+            {
+                _dataContext.ControlePermanenciaCarros.Remove(modelo);
+                await _dataContext.SaveChangesAsync();
+                return Ok("O controle de permanência foi deletado!");
+            }
+            else
+            {
+                return NotFound("Não foi possivel encontrar o controle de permanência!");
+            }
+        }
 
         //[HttpPut("{id}")]
         //public async Task<ActionResult> Update([FromRoute] int id, [FromBody] ControlePermanenciaCarrosModel model)
