@@ -1,6 +1,7 @@
 ﻿using ControleEstacionamento.WebApi.Database;
 using ControleEstacionamento.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ControleEstacionamento.WebApi.Controllers
 {
@@ -18,14 +19,14 @@ namespace ControleEstacionamento.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult> Get()
         {
-            var modelo = _dataContext.ControlePermanenciaCarros.ToList();
+            var modelo = _dataContext.ControlePermanenciaCarros.ToListAsync();
             return Ok(modelo);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById([FromRoute] int id)
         {
-            var modelo = _dataContext.ControlePermanenciaCarros.Where(c => c.Id == id).ToList();
+            var modelo = _dataContext.ControlePermanenciaCarros.Where(c => c.Id == id).FirstOrDefaultAsync();
 
             if (modelo == null)
                 return NotFound();
@@ -33,12 +34,13 @@ namespace ControleEstacionamento.WebApi.Controllers
             return Ok(modelo);
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult> Post([FromBody] ControlePermanenciaCarrosModel model)
-        //{
-        //    controlePermanenciaCarros.Add(model);
-        //    return Ok(model);
-        //}
+        [HttpPost]
+        public async Task<ActionResult> Post([FromBody] ControlePermanenciaCarrosModel model)
+        {
+            _dataContext.ControlePermanenciaCarros.Add(model);
+            await _dataContext.SaveChangesAsync();
+            return Ok(model);
+        }
 
         //[HttpDelete("{id}")]
         //public async Task<ActionResult> Delete([FromRoute] int id)
