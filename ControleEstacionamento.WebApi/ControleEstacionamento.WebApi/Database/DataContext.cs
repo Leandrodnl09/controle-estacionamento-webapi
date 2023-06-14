@@ -7,6 +7,8 @@ namespace ControleEstacionamento.WebApi.Database
     {
         public DbSet<CarrosModeloModel> CarrosModelo { get; set; }
 
+        public DbSet<ControlePermanenciaCarrosModel> ControlePermanenciaCarros { get; set; }    
+
         public DataContext(DbContextOptions options) : base(options)
         {
         }
