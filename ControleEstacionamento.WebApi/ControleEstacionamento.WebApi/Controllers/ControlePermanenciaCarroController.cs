@@ -77,5 +77,57 @@ namespace ControleEstacionamento.WebApi.Controllers
                 return NotFound("Não foi possivel encontrar o controle de permanência!");
             }
         }
+
+        [HttpPut("/finalizarpermanencia/{id}")]
+        public async Task<ActionResult> Update([FromRoute] int id)
+        {
+            try
+            {
+                var modelo = await _dataContext.ControlePermanenciaCarros.Where(c => c.Id == id).FirstOrDefaultAsync();
+
+                if (modelo != null)
+                {
+                    modelo.DataHoraSaida = DateTime.Now;
+                    await _dataContext.SaveChangesAsync();
+                    return Ok("O controle de permanência foi finalizado com sucesso!");
+                }
+                else
+                {
+                    return NotFound("Não foi possivel encontrar o controle de permanência!");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPost("/calculartempodepermanencia/{id}")]
+        public async Task<ActionResult> Update([FromRoute] int id, [FromBody] PrecoPermanenciaModel model)
+        {
+            try
+            {
+                var modelo = await _dataContext.ControlePermanenciaCarros.Where(c => c.Id == id).FirstOrDefaultAsync();
+
+                if (modelo != null)
+                {
+                    var horas = (modelo.DataHoraSaida - modelo.DataHoraEntrada).Value.TotalHours;
+                    return Ok("O valor da permanência " + (horas * model.ValorHora).ToString("0.##"));
+                }
+                else
+                {
+                    return NotFound("Não foi possivel encontrar o controle de permanência!");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex);
+            }
+        }
+
     }
 }
+
+            
