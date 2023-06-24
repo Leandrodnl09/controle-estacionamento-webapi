@@ -112,7 +112,17 @@ namespace ControleEstacionamento.WebApi.Controllers
 
                 if (modelo != null)
                 {
-                    var horas = (modelo.DataHoraSaida - modelo.DataHoraEntrada).Value.TotalHours;
+                    var tempoTotal = modelo.DataHoraSaida - modelo.DataHoraEntrada;
+                    var horas = tempoTotal.Value.TotalHours;
+
+                    if (horas <= 0.59)
+                    {
+                        horas = 1.00;
+                    }
+                    else
+                    {
+                        horas = Math.Ceiling(horas);
+                    }
                     return Ok("O valor da permanência " + (horas * model.ValorHora).ToString("0.##"));
                 }
                 else
