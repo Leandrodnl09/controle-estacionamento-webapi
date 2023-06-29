@@ -1,4 +1,4 @@
-# Controle de Estacionamento - API em C# ASP.NET
+# Controle de Estacionamento - API em C# ASP.NET Entity
 
 Este é o projeto final da Academia Atos para o controle de estacionamento, desenvolvido utilizando a tecnologia C# ASP.NET API. O objetivo desta API é fornecer um sistema eficiente e confiável para gerenciar o fluxo de veículos em um estacionamento, facilitando o registro de entradas e saídas e consulta de vagas disponíveis.
 
@@ -13,7 +13,7 @@ __* Tecnologias Utilizadas:__
 
 C# ASP.NET: Framework utilizado para desenvolver a API do sistema de controle de estacionamento.
 Entity Framework: Framework de mapeamento objeto-relacional utilizado para a interação com o banco de dados (SQL Server).
-Swagger: Biblioteca utilizada para documentar a API e facilitar a realização de testes (CRUD)
+Swagger: Biblioteca utilizada para documentar a API e facilitar a realização de testes (CRUD).
 
 __* Como Utilizar:__
 
@@ -28,7 +28,7 @@ __* Contribuição:__
 Contribuições são bem-vindas! Se você encontrou algum problema, tem alguma sugestão ou deseja adicionar novas funcionalidades ao projeto, sinta-se à vontade para enviar uma mensagem.
 
 __* Licença:__
-Este projeto está licenciado sob a MIT License, o que significa que você tem total liberdade para utilizar, modificar e distribuir o código conforme sua necessidade.
+Este projeto está pública, o que significa que você tem total liberdade para utilizar, modificar e distribuir o código conforme sua necessidade.
 
 Esperamos que esta API seja útil e possa servir como base para o desenvolvimento de soluções de controle de estacionamento eficientes e intuitivas. Aproveite todas as funcionalidades oferecidas pela API e personalize conforme suas necessidades!
 
